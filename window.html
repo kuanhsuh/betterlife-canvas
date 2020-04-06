@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container mx-auto py-20">
+    <h1 class="mb-2 text-center font-medium text-3xl">一般推窗</h1>
+    <div class="flex flex-wrap -mx-2">
+      <div id="canvasContainer" class="w-full sm:w-9/12 px-2 border rounded" style="height: 500px">
+        <canvas></canvas>
+      </div>
+      <div class="w-full sm:w-3/12 px-2">
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Width <span class="text-xs text-gray-500">300-600</span>
+          </label>
+          <input id="inputWidth"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username" type="text" placeholder="Width">
+        </div>
+        <div class="mb-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+            Height <span class="text-xs text-gray-500">300-600</span>
+          </label>
+          <input id="inputHeight"
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="username" type="text" placeholder="Height">
+          <button
+            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="button">
+            Draw
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // DOM Declaration
+    var c = document.querySelector("canvas")
+    var button = document.querySelector("button")
+    var inputWidth = document.querySelector("#inputWidth")
+    var inputHeight = document.querySelector("#inputHeight")
+    var offset = 8
+    // Canvas Init
+    c.width = document.querySelector("#canvasContainer").clientWidth;
+    c.height = document.querySelector("#canvasContainer").clientHeight;
+    var ctx = c.getContext("2d");
+    ctx.font = "16px Arial";
+
+
+    function drawWindow(width, height) {
+      // 窗戶外框
+      ctx.beginPath();
+      ctx.rect(c.width / 4, c.height / 4, width, height);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.rect(c.width / 4 + offset, c.height / 4 + offset, width - offset * 2, height - offset * 2);
+      ctx.stroke();
+
+      // 窗戶內框
+      ctx.beginPath();
+      // top left edge
+      ctx.moveTo(c.width / 4 + 20, c.height / 4 - 20);
+      // the top right edge
+      ctx.lineTo(c.width / 4 + width - offset, c.height / 4 + offset);
+      // bottom right edge
+      ctx.lineTo(c.width / 4 + width - offset, c.height / 4 + height - offset);
+      // bottom left edge
+      ctx.lineTo(c.width / 4 + 20, c.height / 4 + height - 30);
+      // closing the path automatically creates
+      ctx.closePath();
+      ctx.stroke();
+
+      (c.height / 2 + height) / 2
+      // Draw Inner Triangle
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 + width - offset, c.height / 4 + offset);
+      ctx.lineTo(c.width / 4 + 20, (c.height / 2 + height) / 2);
+      ctx.lineTo(c.width / 4 + width - offset, c.height / 4 + height - offset);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Display X Number
+      ctx.fillText(width, c.width / 4 + width / 2 - 10, c.height / 4 - 20);
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4, c.height / 4 - 40);
+      ctx.lineTo(c.width / 4, c.height / 4 - 10);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4, c.height / 4 - 25);
+      ctx.lineTo(c.width / 4 + 60, c.height / 4 - 25);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 + width, c.height / 4 - 40);
+      ctx.lineTo(c.width / 4 + width, c.height / 4 - 10);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 + width, c.height / 4 - 25);
+      ctx.lineTo(c.width / 4 + width - 60, c.height / 4 - 25);
+      ctx.stroke();
+
+      // Display Y Number
+      ctx.fillText(height, c.width / 4 - 40, c.height / 2 - 20);
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 - 40, c.height / 4);
+      ctx.lineTo(c.width / 4 - 10, c.height / 4);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 - 40, c.height / 4 + height);
+      ctx.lineTo(c.width / 4 - 10, c.height / 4 + height);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 - 25, c.height / 4);
+      ctx.lineTo(c.width / 4 - 25, c.height / 4 + 60);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(c.width / 4 - 25, c.height / 4 + height);
+      ctx.lineTo(c.width / 4 - 25, c.height / 4 + height - 60);
+      ctx.stroke();
+    }
+
+    // Button Event Listen
+    button.addEventListener('click', () => {
+      widthValue = inputWidth.value * 1
+      heightValue = inputHeight.value * 1
+      // inputWidth.value = ""
+      // inputHeight.value = ""
+      ctx.clearRect(0, 0, c.width, c.height);
+      drawWindow(widthValue, heightValue)
+    })
+
+  </script>
+</body>
+
+</html>
